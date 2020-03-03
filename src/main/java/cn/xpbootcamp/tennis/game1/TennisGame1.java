@@ -4,71 +4,33 @@ import cn.xpbootcamp.tennis.TennisGame;
 
 public class TennisGame1 implements TennisGame {
 
-    private int m_score1 = 0;
-    private int m_score2 = 0;
+    private int player1Score = 0;
+    private int player2Score = 0;
     private String player1Name;
-    private String player2Name;
 
-    public TennisGame1(String player1Name, String player2Name) {
+
+    public TennisGame1(String player1Name) {
         this.player1Name = player1Name;
-        this.player2Name = player2Name;
     }
 
     public void wonPoint(String playerName) {
-        if (playerName.equals("player1"))
-            m_score1 += 1;
+        if (playerName.equals(player1Name))
+            player1Score += 1;
         else
-            m_score2 += 1;
+            player2Score += 1;
     }
 
     public String getScore() {
-        StringBuilder score = new StringBuilder();
-        int tempScore = 0;
-        if (m_score1 == m_score2) {
-            switch (m_score1) {
-                case 0:
-                    score = new StringBuilder("Love-All");
-                    break;
-                case 1:
-                    score = new StringBuilder("Fifteen-All");
-                    break;
-                case 2:
-                    score = new StringBuilder("Thirty-All");
-                    break;
-                default:
-                    score = new StringBuilder("Deuce");
-                    break;
-
-            }
-        } else if (m_score1 >= 4 || m_score2 >= 4) {
-            int minusResult = m_score1 - m_score2;
-            if (minusResult == 1) score = new StringBuilder("Advantage player1");
-            else if (minusResult == -1) score = new StringBuilder("Advantage player2");
-            else if (minusResult >= 2) score = new StringBuilder("Win for player1");
-            else score = new StringBuilder("Win for player2");
+        if (player1Score == player2Score) {
+            return player1Score > 2 ? "Deuce" : String.format("%s-All", scoreMap.get(player1Score));
+        } else if (player1Score >= 4 || player2Score >= 4) {
+            int minusResult = player1Score - player2Score;
+            if (minusResult == 1) return "Advantage player1";
+            else if (minusResult == -1) return "Advantage player2";
+            else if (minusResult >= 2) return "Win for player1";
+            else return "Win for player2";
         } else {
-            for (int i = 1; i < 3; i++) {
-                if (i == 1) tempScore = m_score1;
-                else {
-                    score.append("-");
-                    tempScore = m_score2;
-                }
-                switch (tempScore) {
-                    case 0:
-                        score.append("Love");
-                        break;
-                    case 1:
-                        score.append("Fifteen");
-                        break;
-                    case 2:
-                        score.append("Thirty");
-                        break;
-                    case 3:
-                        score.append("Forty");
-                        break;
-                }
-            }
+            return String.format("%s-%s", scoreMap.get(player1Score), scoreMap.get(player2Score));
         }
-        return score.toString();
     }
 }

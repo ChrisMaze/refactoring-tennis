@@ -7,7 +7,6 @@ import cn.xpbootcamp.tennis.game3.TennisGame3;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -61,7 +60,7 @@ class TennisGameTest {
     @ParameterizedTest
     @MethodSource("getAllScores")
     public void checkAllScoresTennisGame1(List<Object> params) {
-        TennisGame1 game = new TennisGame1("player1", "player2");
+        TennisGame1 game = new TennisGame1("player1");
         checkAllScores(params, game);
     }
 
